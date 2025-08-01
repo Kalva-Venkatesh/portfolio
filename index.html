@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalva Venkatesh - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Basic Reset and Body Styles */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(170deg, #f3f4f6, #e5e7eb);
+            color: #374151;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header and Navigation */
+        header {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4f46e5;
+            text-decoration: none;
+        }
+        nav .nav-links {
+            display: none;
+        }
+        nav .nav-links a {
+            color: #4b5563;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            margin: 0 16px;
+        }
+        nav .nav-links a:hover {
+            color: #4f46e5;
+        }
+        nav .contact-button {
+            background-color: #4f46e5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+        nav .contact-button:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+        }
+        #mobile-menu-button {
+            display: block;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #4f46e5;
+        }
+        #mobile-menu {
+            display: none;
+            padding: 0 24px 16px;
+        }
+        #mobile-menu a {
+            display: block;
+            padding: 8px 0;
+            color: #4b5563;
+            text-decoration: none;
+        }
+        #mobile-menu .contact-button {
+            margin-top: 8px;
+            text-align: center;
+        }
+        
+        /* Main Content and Sections */
+        main {
+            padding: 48px 0;
+        }
+        section {
+            padding: 96px 0;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+        .section-bg {
+            background-color: rgba(255, 255, 255, 0.5);
+            margin: 0 -24px;
+            padding: 96px 24px;
+        }
+
+        /* Hero Section */
+        #home {
+            text-align: center;
+            padding: 96px 0;
+        }
+        #home .profile-img-container {
+            width: 144px;
+            height: 144px;
+            margin: 0 auto 24px;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 4px solid white;
+        }
+        #home .profile-img {
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        #home h1 {
+            font-size: 3.75rem;
+            font-weight: 800;
+            color: #111827;
+        }
+        #home .subtitle {
+            margin-top: 1rem;
+            font-size: 1.5rem;
+            color: #4f46e5;
+            font-weight: 600;
+            height: 2.5rem; /* Reserve space for typewriter */
+        }
+        .typewriter-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.5rem;
+            background-color: #4f46e5;
+            animation: blink 0.7s infinite;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        #home .description {
+            margin-top: 1rem;
+            font-size: 1.125rem;
+            color: #6b7280;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #home .social-links {
+            margin-top: 2.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        #home .social-links a {
+            color: #6b7280;
+            transition: all 0.3s;
+        }
+        #home .social-links a:hover {
+            color: #4f46e5;
+            transform: scale(1.1);
+        }
+        #home .resume-button {
+            background-color: white;
+            color: #4f46e5;
+            padding: 12px 24px;
+            border-radius: 9999px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e0e7ff;
+        }
+        #home .resume-button:hover {
+            background-color: #f9fafb;
+            transform: translateY(-2px);
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        /* About Section */
+        #about .card {
+            max-width: 56rem;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #about .education-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 32px;
+        }
+        #about .education-item {
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid transparent;
+        }
+        .bg-indigo-50 { background-color: #eef2ff; border-color: #e0e7ff; }
+        .text-indigo-800 { color: #3730a3; }
+        .text-indigo-600 { color: #4f46e5; }
+        .bg-green-50 { background-color: #f0fdf4; border-color: #dcfce7; }
+        .text-green-800 { color: #166534; }
+        .text-green-600 { color: #16a34a; }
+        .bg-blue-50 { background-color: #eff6ff; border-color: #dbeafe; }
+        .text-blue-800 { color: #1e40af; }
+        .text-blue-600 { color: #2563eb; }
+        
+        /* Skills Section */
+        #skills .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 72rem;
+            margin: 0 auto;
+        }
+        #skills .card {
+            text-align: center;
+        }
+        #skills .card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+        #skills .card .skill-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1rem;
+        }
+        #skills ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: #4b5563;
+        }
+        #skills li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Projects Section */
+        #projects .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 72rem;
+            margin: 0 auto;
+        }
+        #projects .card {
+            display: flex;
+            flex-direction: column;
+        }
+        #projects .card p {
+            flex-grow: 1;
+            color: #4b5563;
+        }
+        #projects .card a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        #projects .card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Internships & Certifications Section */
+        #internships .content-wrapper, #certifications .content-wrapper {
+            max-width: 56rem;
+            margin: 0 auto;
+        }
+        #internships .card:not(:last-child) {
+            margin-bottom: 2rem;
+        }
+        #certifications ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            color: #4b5563;
+        }
+        #certifications li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* Contact Section */
+        #contact .content-wrapper {
+            max-width: 48rem;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #contact p {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+        }
+        #contact .contact-button {
+            display: inline-block;
+            background-color: #4f46e5;
+            color: white;
+            font-size: 1.125rem;
+            font-weight: 600;
+            padding: 16px 40px;
+            border-radius: 9999px;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+        #contact .contact-button:hover {
+            background-color: #4338ca;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #111827;
+            color: #e5e7eb;
+            padding: 40px 0;
+            text-align: center;
+        }
+        footer .social-links {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        footer .social-links a {
+            color: #9ca3af;
+            transition: all 0.3s;
+        }
+        footer .social-links a:hover {
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        /* Animation */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Media Queries */
+        @media (min-width: 768px) {
+            nav .nav-links {
+                display: flex;
+                align-items: center;
+            }
+            #mobile-menu-button {
+                display: none;
+            }
+            #about .education-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            #skills .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            #projects .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1024px) {
+            #skills .skills-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            #projects .projects-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">KV</a>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#internships">Internships</a>
+                    <a href="#contact" class="contact-button">Contact</a>
+                </div>
+                <button id="mobile-menu-button">
+                    <i data-lucide="menu"></i>
+                </button>
+            </nav>
+        </div>
+        <div id="mobile-menu" class="container">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#internships">Internships</a>
+            <a href="#certifications">Certifications</a>
+            <a href="#contact" class="contact-button">Contact</a>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Hero Section -->
+        <section id="home">
+            <div class="profile-img-container">
+                 <img src="profilr-pic.png" alt="Kalva Venkatesh" class="profile-img">
+            </div>
+            <h1>Kalva Venkatesh</h1>
+            <p class="subtitle"><span id="typewriter"></span><span class="typewriter-cursor"></span></p>
+            <p class="description">A passionate and dedicated computer science student with a strong foundation in software development and a drive to solve real-world problems.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/kalva-venkatesh/" target="_blank"><i data-lucide="linkedin" style="width:32px; height:32px;"></i></a>
+                <a href="https://github.com/Kalva-Venkatesh" target="_blank"><i data-lucide="github" style="width:32px; height:32px;"></i></a>
+                <a href="mailto:Venkateshkalva400@gmail.com"><i data-lucide="mail" style="width:32px; height:32px;"></i></a>
+                <a href="resume_ed.pdf" download="Kalva_Venkatesh_Resume.pdf" class="resume-button">
+                    <i data-lucide="download" style="width:20px; height:20px;"></i>
+                    <span>Download Resume</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="fade-in-up">
+            <h2 class="section-title">About Me</h2>
+            <div class="card">
+                <p style="font-size: 1.125rem; line-height: 1.75;">I am a Computer Science Engineering student at G. Pulla Reddy Engineering College, with a strong academic background and a passion for technology. My objective is to secure a challenging role where I can apply my technical, analytical, and problem-solving skills to contribute to a company's success and grow professionally.</p>
+                <div class="education-grid">
+                    <div class="education-item bg-indigo-50">
+                        <h3 class="text-indigo-800" style="font-weight: bold; font-size: 1.125rem;">B.Tech, CSE</h3>
+                        <p class="text-indigo-600" style="font-size: 0.875rem;">G. Pulla Reddy Engg. College</p>
+                        <p class="text-indigo-600" style="font-size: 0.875rem;">2021 - 2025 | 8.36 CGPA</p>
+                    </div>
+                    <div class="education-item bg-green-50">
+                        <h3 class="text-green-800" style="font-weight: bold; font-size: 1.125rem;">Intermediate</h3>
+                        <p class="text-green-600" style="font-size: 0.875rem;">Narayana Junior College</p>
+                        <p class="text-green-600" style="font-size: 0.875rem;">2019 - 2021 | 96.7%</p>
+                    </div>
+                    <div class="education-item bg-blue-50">
+                        <h3 class="text-blue-800" style="font-weight: bold; font-size: 1.125rem;">Secondary School</h3>
+                        <p class="text-blue-600" style="font-size: 0.875rem;">Bhashyam Public School</p>
+                        <p class="text-blue-600" style="font-size: 0.875rem;">2018 - 2019 | 95%</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section-bg fade-in-up">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="card">
+                    <i data-lucide="code" class="skill-icon" style="color: #4f46e5;"></i>
+                    <h3>Languages</h3>
+                    <ul><li>C</li><li>Java</li><li>Python</li></ul>
+                </div>
+                <div class="card">
+                    <i data-lucide="globe" class="skill-icon" style="color: #16a34a;"></i>
+                    <h3>Web Development</h3>
+                    <ul><li>HTML & CSS</li><li>JavaScript</li><li>React.js</li><li>Node.js</li></ul>
+                </div>
+                <div class="card">
+                    <i data-lucide="database" class="skill-icon" style="color: #2563eb;"></i>
+                    <h3>Databases</h3>
+                    <ul><li>MySQL</li><li>MongoDB</li></ul>
+                </div>
+                <div class="card">
+                    <i data-lucide="terminal-square" class="skill-icon" style="color: #d97706;"></i>
+                    <h3>Developer Tools</h3>
+                    <ul><li>Git & GitHub</li><li>Visual Studio Code</li></ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="fade-in-up">
+            <h2 class="section-title">My Projects</h2>
+            <div class="projects-grid">
+                <div class="card">
+                    <h3>Full-Stack Grocery-Mart</h3>
+                    <p>A complete e-commerce platform for groceries. Features authentication, cart, payment gateway, and an admin panel. Built with React.js, Node.js, and MySQL.</p>
+                    <div><a href="https://github.com/Kalva-Venkatesh" target="_blank">View on GitHub <i data-lucide="arrow-right" style="display:inline; width:16px; height:16px; vertical-align: middle;"></i></a></div>
+                </div>
+                <div class="card">
+                    <h3>Crop Yield Prediction</h3>
+                    <p>Utilizes machine learning and deep learning algorithms to predict crop yield, helping farmers make informed decisions.</p>
+                    <div><a href="https://github.com/Kalva-Venkatesh" target="_blank">View on GitHub <i data-lucide="arrow-right" style="display:inline; width:16px; height:16px; vertical-align: middle;"></i></a></div>
+                </div>
+                <div class="card">
+                    <h3>Electricity Bill Management</h3>
+                    <p>A system for managing electricity bills, developed using Java Servlets and JSP for the backend and web interface.</p>
+                    <div><a href="https://github.com/Kalva-Venkatesh" target="_blank">View on GitHub <i data-lucide="arrow-right" style="display:inline; width:16px; height:16px; vertical-align: middle;"></i></a></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Internships Section -->
+        <section id="internships" class="section-bg fade-in-up">
+            <h2 class="section-title">Internships</h2>
+            <div class="content-wrapper">
+                <div class="card">
+                    <h3>Full Stack Java Intern</h3>
+                    <p><strong>PacketPrep, Hyderabad</strong> - 4 Months</p>
+                    <p>Gained hands-on experience in developing full-stack applications using Java technologies, contributing to real-world projects.</p>
+                </div>
+                <div class="card">
+                    <h3>Machine Learning Intern (Virtual)</h3>
+                    <p><strong>ExcelR Edtech</strong> - 6 Weeks</p>
+                    <p>Worked on machine learning projects, from data preprocessing to model deployment, enhancing my practical ML skills.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Certifications Section -->
+        <section id="certifications" class="fade-in-up">
+            <h2 class="section-title">Certifications & Achievements</h2>
+            <div class="content-wrapper">
+                 <div class="card">
+                    <ul>
+                        <li>Infosys Springboard Certifications (Java, Python, DS, SQL).</li>
+                        <li>Advanced Data Structures and Algorithms from Smart Interviews.</li>
+                        <li>Microsoft Technology Associate (MTA) - Java.</li>
+                        <li>Solved 240+ problems on LeetCode.</li>
+                        <li>Active problem solver on HackerRank, CodeChef, and InterviewBit.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section-bg fade-in-up">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="content-wrapper">
+                <p>I'm currently seeking new opportunities and would love to hear from you. Whether you have a question or just want to say hi, my inbox is always open.</p>
+                <a href="mailto:Venkateshkalva400@gmail.com" class="contact-button">
+                    Say Hello
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Kalva Venkatesh. Designed & Built with ❤️.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/kalva-venkatesh/" target="_blank"><i data-lucide="linkedin"></i></a>
+                <a href="https://github.com/Kalva-Venkatesh" target="_blank"><i data-lucide="github"></i></a>
+                <a href="mailto:Venkateshkalva400@gmail.com"><i data-lucide="mail"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            const isHidden = mobileMenu.style.display === 'none' || mobileMenu.style.display === '';
+            mobileMenu.style.display = isHidden ? 'block' : 'none';
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (mobileMenu.style.display === 'block') {
+                    mobileMenu.style.display = 'none';
+                }
+            });
+        });
+
+        // Typewriter Effect
+        const typewriterElement = document.getElementById('typewriter');
+        const phrases = ["Full Stack Developer", "ML Enthusiast", "Problem Solver"];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            if (isDeleting) {
+                typewriterElement.textContent = currentPhrase.substring(0, charIndex--);
+            } else {
+                typewriterElement.textContent = currentPhrase.substring(0, charIndex++);
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                setTimeout(() => isDeleting = true, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+            }
+            
+            const typingSpeed = isDeleting ? 50 : 150;
+            setTimeout(type, typingSpeed);
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            if(typewriterElement) {
+                setTimeout(type, 200);
+            }
+        });
+
+        // Intersection Observer for animations
+        const animatedElements = document.querySelectorAll('.fade-in-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animatedElements.forEach(el => {
+            observer.observe(el);
+        });
+
+    </script>
+</body>
+</html>
