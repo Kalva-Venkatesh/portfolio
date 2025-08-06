@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalva Venkatesh - Portfolio</title>
+    <title>Kalva Venkatesh - 3D Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.157.0/build/three.module.js"
+      }
+    }
+    </script>
+
     <style>
         /* Basic Reset and Body Styles */
         html {
@@ -13,10 +23,17 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(170deg, #f3f4f6, #e5e7eb);
-            color: #374151;
+            background-color: #0d1117; /* Dark background for 3D scene */
+            color: #e5e7eb; /* Light text color */
             margin: 0;
             line-height: 1.6;
+        }
+        #bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            outline: none;
+            z-index: -1; /* Place canvas behind all content */
         }
         .container {
             max-width: 1200px;
@@ -26,9 +43,9 @@
 
         /* Header and Navigation */
         header {
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(13, 17, 23, 0.7); /* Dark, semi-transparent */
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 50;
@@ -42,52 +59,53 @@
         nav .logo {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #4f46e5;
+            color: #8b5cf6; /* Updated accent color */
             text-decoration: none;
         }
         nav .nav-links {
             display: none;
         }
         nav .nav-links a {
-            color: #4b5563;
+            color: #d1d5db;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
             margin: 0 16px;
         }
         nav .nav-links a:hover {
-            color: #4f46e5;
+            color: #8b5cf6;
         }
         nav .contact-button {
-            background-color: #ffffff;
+            background-color: #8b5cf6;
             color: white;
             padding: 10px 20px;
             border-radius: 9999px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
         }
         nav .contact-button:hover {
-            background-color: #4338ca;
+            background-color: #7c3aed;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
         }
         #mobile-menu-button {
             display: block;
             background: none;
             border: none;
             cursor: pointer;
-            color: #4f46e5;
+            color: #8b5cf6;
         }
         #mobile-menu {
             display: none;
             padding: 0 24px 16px;
+            background-color: rgba(13, 17, 23, 0.9); /* Match header for consistency */
         }
         #mobile-menu a {
             display: block;
             padding: 8px 0;
-            color: #4b5563;
+            color: #d1d5db;
             text-decoration: none;
         }
         #mobile-menu .contact-button {
@@ -98,6 +116,8 @@
         /* Main Content and Sections */
         main {
             padding: 48px 0;
+            position: relative; /* Ensure content stays above the canvas */
+            z-index: 1;
         }
         section {
             padding: 96px 0;
@@ -105,14 +125,13 @@
         .section-title {
             font-size: 2.5rem;
             font-weight: 800;
-            color: #1f2937;
+            color: #f9fafb; /* Lighter title color */
             margin-bottom: 48px;
             text-align: center;
         }
         .section-bg {
-            background-color: rgba(255, 255, 255, 0.5);
-            margin: 0 -24px;
-            padding: 96px 24px;
+            background-color: #4338ca;
+             /* The 3D background serves as the section background now */
         }
 
         /* Hero Section */
@@ -125,8 +144,8 @@
             height: 144px;
             margin: 0 auto 24px;
             border-radius: 50%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 4px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 4px solid #8b5cf6;
         }
         #home .profile-img {
             border-radius: 50%;
@@ -137,12 +156,12 @@
         #home h1 {
             font-size: 3.75rem;
             font-weight: 800;
-            color: #111827;
+            color: #ffffff;
         }
         #home .subtitle {
             margin-top: 1rem;
             font-size: 1.5rem;
-            color: #4f46e5;
+            color: #a78bfa;
             font-weight: 600;
             height: 2.5rem; /* Reserve space for typewriter */
         }
@@ -150,7 +169,7 @@
             display: inline-block;
             width: 3px;
             height: 1.5rem;
-            background-color: #4f46e5;
+            background-color: #a78bfa;
             animation: blink 0.7s infinite;
             margin-left: 4px;
             vertical-align: middle;
@@ -162,7 +181,7 @@
         #home .description {
             margin-top: 1rem;
             font-size: 1.125rem;
-            color: #6b7280;
+            color: #d1d5db;
             max-width: 48rem;
             margin-left: auto;
             margin-right: auto;
@@ -175,16 +194,16 @@
             align-items: center;
         }
         #home .social-links a {
-            color: #6b7280;
+            color: #9ca3af;
             transition: all 0.3s;
         }
         #home .social-links a:hover {
-            color: #4f46e5;
+            color: #8b5cf6;
             transform: scale(1.1);
         }
         #home .resume-button {
-            background-color: white;
-            color: #4f46e5;
+            background-color: transparent;
+            color: #a78bfa;
             padding: 12px 24px;
             border-radius: 9999px;
             font-weight: 700;
@@ -193,27 +212,28 @@
             align-items: center;
             gap: 0.5rem;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid #e0e7ff;
+            border: 2px solid #a78bfa;
         }
         #home .resume-button:hover {
-            background-color: #f9fafb;
+            background-color: #a78bfa;
+            color: white;
             transform: translateY(-2px);
         }
 
         /* Card Styles */
         .card {
-            background-color: rgba(255, 255, 255, 0.6);
+            background-color: rgba(31, 41, 55, 0.4); /* Darker, semi-transparent card */
             backdrop-filter: blur(12px);
             border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
             padding: 24px;
             transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            border-color: rgba(139, 92, 246, 0.5);
         }
 
         /* About Section */
@@ -221,6 +241,9 @@
             max-width: 56rem;
             margin: 0 auto;
             text-align: center;
+        }
+        #about p {
+            color: #d1d5db;
         }
         #about .education-grid {
             display: grid;
@@ -233,15 +256,16 @@
             border-radius: 12px;
             border: 1px solid transparent;
         }
-        .bg-indigo-50 { background-color: #eef2ff; border-color: #e0e7ff; }
-        .text-indigo-800 { color: #3730a3; }
-        .text-indigo-600 { color: #4f46e5; }
-        .bg-green-50 { background-color: #f0fdf4; border-color: #dcfce7; }
-        .text-green-800 { color: #166534; }
-        .text-green-600 { color: #16a34a; }
-        .bg-blue-50 { background-color: #eff6ff; border-color: #dbeafe; }
-        .text-blue-800 { color: #1e40af; }
-        .text-blue-600 { color: #2563eb; }
+        /* Updated colors for dark theme */
+        .bg-indigo-50 { background-color: #312e8125; border-color: #4338ca; }
+        .text-indigo-800 { color: #c7d2fe; }
+        .text-indigo-600 { color: #a5b4fc; }
+        .bg-green-50 { background-color: #14532d25; border-color: #16a34a; }
+        .text-green-800 { color: #bbf7d0; }
+        .text-green-600 { color: #86efac; }
+        .bg-blue-50 { background-color: #1e40af25; border-color: #2563eb; }
+        .text-blue-800 { color: #bfdbfe; }
+        .text-blue-600 { color: #93c5fd; }
         
         /* Skills Section */
         #skills .skills-grid {
@@ -258,7 +282,7 @@
             font-size: 1.25rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: #1f2937;
+            color: #f9fafb;
         }
         #skills .card .skill-icon {
             width: 48px;
@@ -269,7 +293,7 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            color: #4b5563;
+            color: #d1d5db;
         }
         #skills li {
             margin-bottom: 0.5rem;
@@ -287,12 +311,13 @@
             display: flex;
             flex-direction: column;
         }
+        #projects .card h3 { color: #f9fafb; }
         #projects .card p {
             flex-grow: 1;
-            color: #4b5563;
+            color: #d1d5db;
         }
         #projects .card a {
-            color: #4f46e5;
+            color: #a78bfa;
             text-decoration: none;
             font-weight: 600;
             margin-top: 1rem;
@@ -309,13 +334,18 @@
         #internships .card:not(:last-child) {
             margin-bottom: 2rem;
         }
+        #internships h3, #certifications h3 { color: #f9fafb; }
+        #internships p, #certifications p { color: #d1d5db; }
         #certifications ul {
-            list-style: disc;
-            padding-left: 1.5rem;
-            color: #4b5563;
+            list-style: none; /* Changed for better visual */
+            padding-left: 0;
+            color: #d1d5db;
         }
         #certifications li {
             margin-bottom: 0.75rem;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 12px;
+            border-radius: 6px;
         }
 
         /* Contact Section */
@@ -327,10 +357,11 @@
         #contact p {
             font-size: 1.125rem;
             margin-bottom: 2rem;
+            color: #d1d5db;
         }
         #contact .contact-button {
             display: inline-block;
-            background-color: #88c4de;
+            background-color: #8b5cf6;
             color: white;
             font-size: 1.125rem;
             font-weight: 600;
@@ -338,19 +369,21 @@
             border-radius: 9999px;
             text-decoration: none;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
         }
         #contact .contact-button:hover {
-            background-color: #4338ca;
+            background-color: #7c3aed;
             transform: scale(1.05);
         }
 
         /* Footer */
         footer {
-            background-color: #111827;
+            background-color: #1f2937;
             color: #e5e7eb;
             padding: 40px 0;
             text-align: center;
+            position: relative;
+            z-index: 10;
         }
         footer .social-links {
             margin-top: 1.5rem;
@@ -409,7 +442,8 @@
 </head>
 <body>
 
-    <!-- Header -->
+    <canvas id="bg"></canvas>
+
     <header>
         <div class="container">
             <nav>
@@ -438,7 +472,6 @@
 
     <main class="container">
 
-        <!-- Hero Section -->
         <section id="home">
             <div class="profile-img-container">
                  <img src="profilr-pic.png" alt="Kalva Venkatesh" class="profile-img">
@@ -457,7 +490,6 @@
             </div>
         </section>
 
-        <!-- About Section -->
         <section id="about" class="fade-in-up">
             <h2 class="section-title">About Me</h2>
             <div class="card">
@@ -482,64 +514,59 @@
             </div>
         </section>
 
-        <!-- Skills Section -->
-        <section id="skills" class="section-bg fade-in-up">
+        <section id="skills" class="fade-in-up">
             <h2 class="section-title">Technical Skills</h2>
             <div class="skills-grid">
                 <div class="card">
-                    <i data-lucide="code" class="skill-icon" style="color: #4f46e5;"></i>
+                    <i data-lucide="code" class="skill-icon" style="color: #8b5cf6;"></i>
                     <h3>Languages</h3>
                     <ul><li>C</li><li>Java</li><li>Python</li></ul>
                 </div>
                 <div class="card">
-                    <i data-lucide="globe" class="skill-icon" style="color: #16a34a;"></i>
+                    <i data-lucide="globe" class="skill-icon" style="color: #34d399;"></i>
                     <h3>Web Development</h3>
                     <ul><li>HTML & CSS</li><li>JavaScript</li><li>React.js</li><li>Node.js</li><li>Express.js</li></ul>
                 </div>
                 <div class="card">
-                    <i data-lucide="database" class="skill-icon" style="color: #2563eb;"></i>
+                    <i data-lucide="database" class="skill-icon" style="color: #60a5fa;"></i>
                     <h3>Databases</h3>
                     <ul><li>MySQL</li><li>MongoDB</li></ul>
                 </div>
                 <div class="card">
-                    <i data-lucide="terminal-square" class="skill-icon" style="color: #d97706;"></i>
+                    <i data-lucide="terminal-square" class="skill-icon" style="color: #fb923c;"></i>
                     <h3>Developer Tools</h3>
                     <ul><li>Git & GitHub</li><li>Visual Studio Code</li></ul>
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <!-- Projects Section -->
-<section id="projects" class="fade-in-up">
-    <h2 class="section-title">My Projects</h2>
-    <div class="projects-grid">
-        <div class="card">
-            <h3>Full-Stack Grocery-Mart</h3>
-            <p>A complete e-commerce platform for groceries. Features authentication, cart, payment gateway, and an admin panel. Built with React.js, Node.js, and MySQL.</p>
-            <div><a href="https://github.com/Kalva-Venkatesh" target="_blank">View on GitHub <i data-lucide="arrow-right" style="display:inline; width:16px; height:16px; vertical-align: middle;"></i></a></div>
-        </div>
-        <div class="card">
-            <h3>Electricity Bill Management System</h3>
-            <p>Web application using Java Servlets, JSP, and MySQL to manage electricity bill generation, customer records, and admin control panel with secure login.</p>
-            <div><a href="https://github.com/Kalva-Venkatesh" target="_blank">View on GitHub <i data-lucide="arrow-right" style="display:inline; width:16px; height:16px; vertical-align: middle;"></i></a></div>
-        </div>
-        <div class="card">
-            <h3>Glucose Balance Through AI-Guided Yoga</h3>
-            <p>AI-powered yoga trainer using Pose Detection to assist diabetic patients in controlling glucose through real-time posture feedback and analytics.</p>
-            <div><a href="https://github.com/Kalva-Venkatesh" target="_blank">View on GitHub <i data-lucide="arrow-right" style="display:inline; width:16px; height:16px; vertical-align: middle;"></i></a></div>
-        </div>
-        <div class="card">
-            <h3>Attractive Small Games Collection</h3>
-            <p>A collection of engaging mini-games like Tic-Tac-Toe, Flappy Bird, Snake, Memory Cards, and more — developed with HTML, CSS, JavaScript & React.</p>
-            <div><a href="https://github.com/Kalva-Venkatesh" target="_blank">View on GitHub <i data-lucide="arrow-right" style="display:inline; width:16px; height:16px;"></i></a></div>
-        </div>
-    </div>
-</section>
+        <section id="projects" class="fade-in-up">
+            <h2 class="section-title">My Projects</h2>
+            <div class="projects-grid">
+                <div class="card">
+                    <h3>Full-Stack Grocery-Mart</h3>
+                    <p>A complete e-commerce platform for groceries. Features authentication, cart, payment gateway, and an admin panel. Built with React.js, Node.js, and MySQL.</p>
+                    <div><a href="https://github.com/Kalva-Venkatesh" target="_blank">View on GitHub <i data-lucide="arrow-right" style="display:inline; width:16px; height:16px; vertical-align: middle;"></i></a></div>
+                </div>
+                <div class="card">
+                    <h3>Electricity Bill Management System</h3>
+                    <p>Web application using Java Servlets, JSP, and MySQL to manage electricity bill generation, customer records, and admin control panel with secure login.</p>
+                    <div><a href="https://github.com/Kalva-Venkatesh" target="_blank">View on GitHub <i data-lucide="arrow-right" style="display:inline; width:16px; height:16px; vertical-align: middle;"></i></a></div>
+                </div>
+                <div class="card">
+                    <h3>Glucose Balance Through AI-Guided Yoga</h3>
+                    <p>AI-powered yoga trainer using Pose Detection to assist diabetic patients in controlling glucose through real-time posture feedback and analytics.</p>
+                    <div><a href="https://github.com/Kalva-Venkatesh" target="_blank">View on GitHub <i data-lucide="arrow-right" style="display:inline; width:16px; height:16px; vertical-align: middle;"></i></a></div>
+                </div>
+                <div class="card">
+                    <h3>Attractive Small Games Collection</h3>
+                    <p>A collection of engaging mini-games like Tic-Tac-Toe, Flappy Bird, Snake, Memory Cards, and more — developed with HTML, CSS, JavaScript & React.</p>
+                    <div><a href="https://github.com/Kalva-Venkatesh" target="_blank">View on GitHub <i data-lucide="arrow-right" style="display:inline; width:16px; height:16px;"></i></a></div>
+                </div>
+            </div>
+        </section>
 
-
-        <!-- Internships Section -->
-        <section id="internships" class="section-bg fade-in-up">
+        <section id="internships" class="fade-in-up">
             <h2 class="section-title">Internships</h2>
             <div class="content-wrapper">
                 <div class="card">
@@ -550,31 +577,29 @@
                 
                 <div class="card">
                     <h3>Artificial Intelligence Intern (Virtual)</h3>
-                    <p>Edunet Foundation - 2 Weeks</p>
+                    <p><strong>Edunet Foundation</strong> - 2 Weeks</p>
                     <p>Completed a foundational internship in AI, learning about core concepts and their applications.</p>
                 </div>
             </div>
         </section>
         
-        <!-- Certifications Section -->
         <section id="certifications" class="fade-in-up">
             <h2 class="section-title">Certifications & Achievements</h2>
             <div class="content-wrapper">
                  <div class="card">
-                    <ul>
-                        <li>Infosys Springboard Certifications (Java, Python, DS, SQL).</li>
-                        <li>Advanced Data Structures and Algorithms from Smart Interviews.</li>
-                        <li>Microsoft Technology Associate (MTA) - Java.</li>
-                        <li>MERN Stack Certification from Udemy</li>
-                        <li>Me Pro level-10 Expert English Proficiency Certificate from Pearson.</li>
-                        <li>Python, Java and Java Script Certifications from Udemy.</li>
-                    </ul>
-                </div>
+                     <ul>
+                         <li>Infosys Springboard Certifications (Java, Python, DS, SQL).</li>
+                         <li>Advanced Data Structures and Algorithms from Smart Interviews.</li>
+                         <li>Microsoft Technology Associate (MTA) - Java.</li>
+                         <li>MERN Stack Certification from Udemy</li>
+                         <li>Me Pro level-10 Expert English Proficiency Certificate from Pearson.</li>
+                         <li>Python, Java and Java Script Certifications from Udemy.</li>
+                     </ul>
+                 </div>
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="section-bg fade-in-up">
+        <section id="contact" class="fade-in-up">
             <h2 class="section-title">Get In Touch</h2>
             <div class="content-wrapper">
                 <p>I'm currently seeking new opportunities and would love to hear from you. Whether you have a question or just want to say hi, my inbox is always open.</p>
@@ -586,7 +611,6 @@
 
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <p>&copy; 2024 Kalva Venkatesh. Designed & Built with ❤️.</p>
@@ -598,6 +622,91 @@
         </div>
     </footer>
 
+    <script type="module">
+        import * as THREE from 'three';
+
+        // --- SCENE SETUP ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.querySelector('#bg'),
+            alpha: true, // Make canvas background transparent
+        });
+
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.position.setZ(30);
+
+        // --- OBJECTS ---
+        // Torus Knot
+        const geometry = new THREE.TorusKnotGeometry(10, 2, 100, 16);
+        const material = new THREE.MeshStandardMaterial({ color: 0x8b5cf6, roughness: 0.4, metalness: 0.6 });
+        const torusKnot = new THREE.Mesh(geometry, material);
+        scene.add(torusKnot);
+
+        // Lights
+        const pointLight = new THREE.PointLight(0xffffff, 2);
+        pointLight.position.set(5, 5, 5);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(pointLight, ambientLight);
+
+        // Particles
+        const particlesGeometry = new THREE.BufferGeometry;
+        const particlesCnt = 5000;
+        const posArray = new Float32Array(particlesCnt * 3);
+
+        for(let i = 0; i < particlesCnt * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * (Math.random() * 5) * 100;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.075,
+            color: 0xffffff,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+        });
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        // --- MOUSE INTERACTION ---
+        const mouse = { x: 0, y: 0 };
+        document.addEventListener('mousemove', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+        
+        // --- WINDOW RESIZE ---
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // --- ANIMATION LOOP ---
+        const clock = new THREE.Clock();
+        const animate = () => {
+            requestAnimationFrame(animate);
+
+            const elapsedTime = clock.getElapsedTime();
+
+            // Animate objects
+            torusKnot.rotation.y = .2 * elapsedTime;
+            torusKnot.rotation.x = .1 * elapsedTime;
+            particlesMesh.rotation.y = -0.02 * elapsedTime;
+
+            // Parallax effect
+            const parallaxX = mouse.x * 0.5;
+            const parallaxY = mouse.y * 0.5;
+            camera.position.x += (parallaxX - camera.position.x) * .1;
+            camera.position.y += (parallaxY - camera.position.y) * .1;
+
+            renderer.render(scene, camera);
+        };
+
+        animate();
+    </script>
+    
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
@@ -664,7 +773,6 @@
         animatedElements.forEach(el => {
             observer.observe(el);
         });
-
     </script>
 </body>
 </html>
